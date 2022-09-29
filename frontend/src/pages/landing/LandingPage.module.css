@@ -1,0 +1,66 @@
+.background{
+    background-color: #f7f8f9;
+}
+.food_ex_date{
+    width: 70%;
+    margin: auto;
+}
+.page_container{
+    min-height: 500px;
+    width: 70%;
+    margin: auto;
+    /* border: 1px solid red; */
+}
+.buget_main_box{
+    min-height: 500px;
+    width: 60%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.range_box{
+    min-height: 500px;
+    width: 35%;
+    border: 1px solid red;
+}
+.table_top{
+    width: 100%;
+    
+        
+   
+}
+.table_top th{
+   
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+    border-collapse: collapse;
+}
+.table_top2{
+    width: 100%;
+    text-align: left;
+    /* border: 1px solid black; */
+   
+}
+
+.gray_heading{
+    font-size: 0.8rem;
+    color: gray;
+    font-weight: 600;
+}
+.eating{
+    width: 100%;
+    font-size: 0.7rem;
+    color: rgb(100, 99, 99);
+    font-weight: 700;
+}
+.input{
+    height: 20px;
+    margin: 2px 20px 2px 20px;
+    font-size: 0.8rem;
+    padding: 0px 20px 2px 4px;
+    border: 1px solid;
+    border-color: rgb(200, 196, 196);
+    border-radius: 3px;
+    width: 150px;
+}
+.table_body{
+    width: 100%;
+}
