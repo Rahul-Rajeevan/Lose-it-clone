@@ -1,3 +1,4 @@
+
 import "./App.css";
 import LandingPage from "./pages/landing/LandingPage";
 import Homepage from "./HomePage/Homepage";
@@ -7,6 +8,10 @@ function App() {
     <div>
       <Homepage />
       <LandingPage />
+
+
+
+
     </div>
   );
 }

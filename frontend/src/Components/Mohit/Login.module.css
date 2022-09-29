@@ -1,0 +1,110 @@
+.main{
+    text-align: center;
+    margin: auto;
+    font-family: Avenir;
+    width: 360px;
+    border: 1px solid red;
+    margin-top: 48px;
+    
+}
+.emailPassword{
+    text-align: left;
+    margin-left: 0px;
+    font-family: Avenir;
+    font-size: 14px;
+    margin-top: 12px;
+}
+.emailPassword:hover{
+    cursor: default;
+}
+.logo_img{
+    width: auto ;
+    height: 3rem;
+    margin-bottom: 50px;
+}
+.email_input{
+    width: 98.5%;
+    height: 1.9rem;
+    border-radius: 2px solid rgb(53, 48, 48);
+    margin-top: 8px;
+}
+.login_but{
+    width: 100%;
+    height: 2rem;
+    background-color:  orange;
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+    margin: auto;
+    padding-top:auto;
+    margin-top: 20px;
+    border-radius: 10px solid orange;
+
+}
+.login_but_in{
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+}
+.login_but:hover{
+    cursor:pointer;
+    background-color: orangered;
+    
+    
+}
+/* //lower */
+.forget_pass{
+    margin-top: 24px;
+    cursor: pointer;
+    color: orange;
+}
+.flex{
+    display: flex;
+    margin-top: 12px;
+    
+}
+.flex2{
+    display: flex;
+    margin-top: 16px;
+    margin: auto;
+    margin-left: 20px;
+    
+}
+.dont_have{
+    margin-left: 50px;
+   
+}
+.create_one{
+    color: orange;
+    
+}
+.or_line{
+    height: 0.1px;
+    border: 1px solid gray;
+    margin-top: 8px;
+    width: 40%;
+}
+.apple_but{
+    width: 100%;
+    height: 2rem;
+    background-color:  black;
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+    margin: auto;
+    padding-top:auto;
+    margin-top: 20px;
+    border-radius: 10px solid orange;
+
+}
+.apple_but_in{
+    text-align:center;
+    margin-top: 10px;
+    
+}
+.apple_but:hover{
+    cursor:pointer;
+    background-color: rgb(44, 42, 42);
+    
+    
+}
