@@ -64,3 +64,16 @@
 .table_body{
     width: 100%;
 }
+
+.dropdown{
+    position: absolute;
+    margin-left: 250px;
+    background-color: white;
+    min-height: 90px;
+    width: 300px;
+    border: 1px solid red;
+    
+}
+.food:hover{
+    background-color: bisque;
+}

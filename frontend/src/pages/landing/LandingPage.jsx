@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import LandingPageNav from '../../components/LandingPageNav/LandingPageNav'
+import React, { useCallback, useEffect, useState } from 'react'
+
 import { 
   Box, 
   Flex, 
@@ -21,15 +21,47 @@ import {
  
 
 import styles from './LandingPage.module.css'
+import LandingPageNav from '../../Components/LandingPageNav/LPN';
 const LandingPage = () => {
-  useEffect(() => {
+
+  // code for food search
+  const [suggestions, setSuggestions] = useState([]);
+  const [food, setFood] = useState([]);
+  const [query, setQuery] = useState("");
+  const getfoodData = () => {
     fetch("https://dry-plateau-25724.herokuapp.com/food",{method:"GET",
   headers:{"Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIzMjNzZHNmc2RmZHNkZnNmIiwiaWF0IjoxNjY0NDM1MzkzfQ.WTJ8HQBA6fXrikVc9rSKv2giq1k1AaGRYeFjx7djLHc"}
-  }).then(r=>r.json()).then(res=>console.log(res))
+  })
+  .then(r=>r.json())
+  .then(res=> setFood(res))
+  }
+  const handleInputTextChange = useCallback((e) => {
+    setQuery(e.target.value);
+  }, []);
+  useEffect(() => {
+    if (query === "") {
+      setSuggestions([])
+    } else {
+      let newfoodSuggestions = food.filter(item => {
+        return item.name.toLowerCase().indexOf(query) !== -1 ? true : false;
+      }).map((item) => {
+        return (item)
+      });
+      setSuggestions(newfoodSuggestions);
+      console.log(newfoodSuggestions);
+    }
+  }, [query])
+
+  useEffect(() => {
+    getfoodData();
   }, [])
+  console.log(suggestions);
+  console.log(food);
+
+   // code for food search
   return (
     <div className={styles.background} >
-      <LandingPageNav />
+      <LandingPageNav/>
       {/* food exercice date section start */}
       <Flex mt={'50px'} mb={'5px'} className={styles.food_ex_date} >
         <Box>
@@ -92,7 +124,7 @@ const LandingPage = () => {
             {/* Add food button end */}
             {/* Add Exercise button start */}
             <Box>
-
+            
             </Box>
             {/* Add Exercise button end */}
           </Flex>
@@ -124,8 +156,25 @@ const LandingPage = () => {
                 <thead>
                   <tr>
                     <th className={styles.eating} colspan="4">Breakfast: <span>0</span></th>
-                    <th><input className={styles.input} type='text' placeholder='search & Add food' /></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
                   </tr>
+                  {
+                    suggestions.length > 0 ?
+                    <Box className={styles.dropdown}>
+                    {
+                      suggestions.map((food)=>(
+                        <Box>
+                          <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
+                            <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
+                            <Text>{food.name}</Text>
+                          </Flex>
+                        </Box>
+                      ))
+                    }
+                    </Box>
+                    :""
+                  }
+                 
                 </thead>
               </table>
               <Box minHeight={'70px'} backgroundColor={'white'}>
