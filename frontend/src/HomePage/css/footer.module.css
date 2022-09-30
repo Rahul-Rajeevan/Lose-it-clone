@@ -1,0 +1,28 @@
+.socialicon {
+  font-size: 25px;
+  color: white;
+  gap: 10px;
+}
+
+.socialicon a:hover {
+  color: #ff9400;
+}
+.termscss {
+  color: #fff;
+}
+.termscss a:hover {
+  color: #ff9400;
+}
+.linkcss {
+  width: 100%;
+  text-align: left;
+}
+
+.mobilelink {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+.mobilelink a:hover {
+  color: #ff9400;
+}
