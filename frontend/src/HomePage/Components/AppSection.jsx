@@ -11,6 +11,7 @@ import React from "react";
 import { AiFillStar, AiFillAndroid, AiFillApple } from "react-icons/ai";
 import style from "../Components/Appsection.module.css";
 import mobile from "../Assets/mobile.png";
+import { NavLink } from "react-router-dom";
 const AppSection = () => {
   const [not1096] = useMediaQuery("(min-width: 1096px)");
   const [not778] = useMediaQuery("(min-width: 778px)");
@@ -48,21 +49,24 @@ const AppSection = () => {
                 >
                   Track the foods you love and lose weight
                 </Text>
-                <Button
-                  bg="#183962"
-                  color="white"
-                  pt="15px"
-                  pb="15px"
-                  pl="30px"
-                  pr="30px"
-                  _hover={{
-                    opacity: 0.8,
-                    color: "white",
-                  }}
-                  mb="30px"
-                >
-                  Sign up for free
-                </Button>
+                <NavLink to="/signup">
+                  <Button
+                    bg="#183962"
+                    color="white"
+                    pt="15px"
+                    pb="15px"
+                    pl="30px"
+                    pr="30px"
+                    _hover={{
+                      opacity: 0.8,
+                      color: "white",
+                    }}
+                    mb="30px"
+                  >
+                    Sign up for free
+                  </Button>
+                </NavLink>
+
                 <HStack w="100%">
                   <HStack display="flex" alignItems="center">
                     <AiFillApple
