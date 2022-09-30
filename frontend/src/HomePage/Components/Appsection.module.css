@@ -6,7 +6,7 @@
   background-position: top, bottom;
   padding: 50px 0px;
   /* width: 100%; */
-  width: auto;
+  /* width: auto; */
 }
 .sectionB {
   background-image: url(https://assets.loseit.com/website/home/Wave.png),
@@ -65,4 +65,14 @@
   letter-spacing: 1px;
   font-weight: 600;
   text-align: center;
+}
+
+/* App Download */
+.appdown {
+  text-align: center;
+  padding: 50px 0px 50px 0px;
+  background-color: #f1f1f1;
+  background-image: url("https://assets.loseit.com/website/home/Pattern_50opacity_Long.svg");
+  background-size: cover;
+  background-position: center;
 }
