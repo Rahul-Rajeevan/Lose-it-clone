@@ -74,8 +74,12 @@ const CarousalFirst = () => {
           slidesPerView={not804 ? 2 : 1}
           spaceBetween={50}
           slidesPerGroup={not804 ? 2 : 1}
-          loop={false}
-          loopFillGroupWithBlank={false}
+          // loop={true}
+          // loopFillGroupWithBlank={true}
+          // autoplay={{
+          //   delay: 1000,
+          //   disableOnInteraction: false,
+          // }}
           pagination={{
             clickable: true,
           }}

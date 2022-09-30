@@ -128,7 +128,14 @@ const CarusalSecond = () => {
                   key={datas.id}
                 >
                   {/* <VStack h="100%" p="40px"> */}
-                  <Image src={datas.src} alt={datas.src} height="100%" />
+                  <Image
+                    src={datas.src}
+                    alt={datas.src}
+                    height="100%"
+                    _hover={{
+                      opacity: 0.8,
+                    }}
+                  />
                   <Text
                     color="#808284"
                     fontSize="16px"
