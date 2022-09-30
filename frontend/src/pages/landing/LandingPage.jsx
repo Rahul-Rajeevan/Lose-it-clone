@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import LandingPageNav from '../../components/LandingPageNav/LandingPageNav'
+
 import { 
   Box, 
   Flex, 
@@ -21,6 +21,7 @@ import {
  
 
 import styles from './LandingPage.module.css'
+import LandingPageNav from '../../Components/LandingPageNav/LPN';
 const LandingPage = () => {
 
   // code for food search
@@ -60,7 +61,7 @@ const LandingPage = () => {
    // code for food search
   return (
     <div className={styles.background} >
-      <LandingPageNav />
+      <LandingPageNav/>
       {/* food exercice date section start */}
       <Flex mt={'50px'} mb={'5px'} className={styles.food_ex_date} >
         <Box>
