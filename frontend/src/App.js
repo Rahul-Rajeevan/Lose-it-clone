@@ -1,12 +1,12 @@
-import "./App.css";
-import LandingPage from "./pages/landing/LandingPage";
-import Homepage from "./HomePage/Homepage";
+import logo from './logo.svg';
+import './App.css';
+import Login from './Components/Mohit/Login';
 
 function App() {
   return (
-    <div>
+    <div className="App">
+      <Login/>
       <Homepage />
-      {/* <LandingPage /> */}
     </div>
   );
 }
