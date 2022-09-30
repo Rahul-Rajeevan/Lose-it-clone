@@ -5,7 +5,7 @@ import Login from './Components/Mohit/Login';
 function App() {
   return (
     <div className="App">
-<Login/>
+      <Login/>
     </div>
   );
 }

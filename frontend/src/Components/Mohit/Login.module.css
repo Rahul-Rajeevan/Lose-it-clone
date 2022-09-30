@@ -3,7 +3,7 @@
     margin: auto;
     font-family: Avenir;
     width: 360px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin-top: 48px;
     
 }
@@ -13,6 +13,7 @@
     font-family: Avenir;
     font-size: 14px;
     margin-top: 12px;
+    color: rgb(100, 99, 99);
 }
 .emailPassword:hover{
     cursor: default;
@@ -25,30 +26,40 @@
 .email_input{
     width: 98.5%;
     height: 1.9rem;
-    border-radius: 2px solid rgb(53, 48, 48);
+    border-radius: 5px ;
     margin-top: 8px;
+    border: 1px solid rgb(206, 206, 206);
+    
 }
 .login_but{
     width: 100%;
     height: 2rem;
-    background-color:  orange;
+    background-color:  rgb(231, 150, 0);
     margin-top: 20px;
     color: white;
     text-align: center;
     margin: auto;
     padding-top:auto;
     margin-top: 20px;
-    border-radius: 10px solid orange;
+    border-radius: 10px ;
+    border-radius: 5px;
 
 }
 .login_but_in{
     text-align: center;
     margin: auto;
     margin-top: 10px;
+    margin-top: 20px;
+}
+.empty_div{
+    width:80%;
+    height: 8px;
+    border: 1  solid red;
+    
 }
 .login_but:hover{
     cursor:pointer;
-    background-color: orangered;
+    background-color: rgb(216, 140, 0);
     
     
 }
@@ -65,24 +76,38 @@
 }
 .flex2{
     display: flex;
-    margin-top: 16px;
+    
     margin: auto;
     margin-left: 20px;
+    margin-top: 32px;
     
 }
 .dont_have{
     margin-left: 50px;
+    font-weight: bold;
+    color: rgb(44, 44, 44);
+    font-size: 14px;
+    cursor: default;
    
 }
 .create_one{
     color: orange;
+    cursor: pointer;
+    margin-left: 2px;
     
 }
 .or_line{
     height: 0.1px;
-    border: 1px solid gray;
+    border: 1px solid rgb(204, 204, 204);
     margin-top: 8px;
     width: 40%;
+}
+.mid_or{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: rgb(201, 201, 201);
+    font-weight: bolder;
+    font-size: 14px;
 }
 .apple_but{
     width: 100%;
@@ -95,6 +120,7 @@
     padding-top:auto;
     margin-top: 20px;
     border-radius: 10px solid orange;
+    border-radius: 5px;
 
 }
 .apple_but_in{
@@ -107,4 +133,45 @@
     background-color: rgb(44, 42, 42);
     
     
+}
+.apple_logo{
+    width: 12px;
+    margin-left: 100px;
+    margin-right: 5px;
+    
+}
+.logo_top_flex{
+    display: flex;
+     margin: auto;
+     text-align: center;
+     font-size: 15px;
+}
+.or_line2{
+    height: 0.1px;
+    border: 1px solid rgb(228, 228, 228);
+    margin-top: 64px;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 80px;
+    
+}
+.copyRight{
+    font-size: 14px;
+    color: gray;
+    margin-left: auto;
+    margin-top: 64px;
+    cursor: default;
+}
+.privacy{
+    font-size: 14px;
+    color: gray;
+    font-weight: bold;
+    margin-left: auto;
+    cursor: pointer;
+
+}
+.forget_pass_now{
+    margin-top: 0px;
+    cursor: pointer;
+    color: orange;
 }
