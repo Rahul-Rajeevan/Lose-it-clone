@@ -8,11 +8,10 @@ const LandingPage = () => {
   const {token}=useSelector((state)=>state.AuthReducer)||localStorage.getItem("token")
   // code for food search
   const [suggestions, setSuggestions] = useState([]);
-  const [food, setFood] = useState([]);
   const [query, setQuery] = useState("");
   const getfoodData = () => {
-    fetch("https://dry-plateau-25724.herokuapp.com/food",{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
-  .then(r=>r.json()).then(res=> setFood(res))
+    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions(res))
   }
   const handleInputTextChange = (e) => {
     setQuery(e.target.value);
@@ -21,21 +20,10 @@ const LandingPage = () => {
     if (query === "") {
       setSuggestions([])
     } else {
-      let newfoodSuggestions = food.filter(item => {
-        return item.name.toLowerCase().indexOf(query) !== -1 ? true : false;
-      }).map((item) => {
-        return (item)
-      });
-      setSuggestions(newfoodSuggestions);
-      console.log(newfoodSuggestions);
-    }
+      getfoodData();
+      }
   }, [query])
 
-  useEffect(() => {
-    getfoodData();
-  }, [])
-  console.log(suggestions);
-  console.log(food);
 
    // code for food search
   return (
