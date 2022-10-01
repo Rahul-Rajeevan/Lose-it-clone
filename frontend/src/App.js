@@ -5,6 +5,7 @@ import Homepage from './HomePage/Homepage';
 import LandingPage from './pages/landing/LandingPage';
 import { Route, Routes } from 'react-router-dom';
 import FirstPage from './Components/SignUpThing/FirstPage';
+import RequireAuth from './Components/RequireAuth';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
      <Route path="/" element={<Homepage/>}/>
      <Route path="/login" element={<Login/>}/>
      <Route path="/signup" element={<FirstPage/>}/>
-     <Route path="/landing" element={<LandingPage/>}/>
+     <Route path="/landing" element={<RequireAuth><LandingPage/></RequireAuth>}/>
      </Routes>
     </div>
   );

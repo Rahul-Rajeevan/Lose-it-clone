@@ -4,7 +4,7 @@ const Inistate={
     isAuth:false,
     isLoading:false,
     error:false,
-    token:""
+    token:localStorage.getItem("token")||""
 }
 
 export const AuthReducer=(state=Inistate,{type,payload})=>{
@@ -17,6 +17,7 @@ export const AuthReducer=(state=Inistate,{type,payload})=>{
         }
 
         case LOGIN_SUCCESS:{
+            localStorage.setItem("token",payload);
             return{...state,
                  isLoading:false,
                  error:false,
@@ -35,6 +36,7 @@ export const AuthReducer=(state=Inistate,{type,payload})=>{
         }
 
         case LOGOUT_SUCCESS:{
+            localStorage.removeItem("token");
             return{...state,
                  isLoading:false,
                  error:false,

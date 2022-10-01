@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from "./LandingPageNav.module.css"
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../Redux/Action'
 const LandingPageNav = () => {
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
   return (
     <div className={styles.nav_div}>
        <div className={styles.menu_div}>
@@ -19,7 +23,7 @@ const LandingPageNav = () => {
           <div className={styles.menu_div2}>
             <Link className={styles.link} to='/'>UserName</Link>
             <Link className={styles.link} to='/'>Upgrade</Link>
-            <Link className={styles.link} to='/'>Sign out</Link>
+            <button className={styles.link} onClick={()=>{dispatch(logout()); navigate("/");}}>Sign out</button>
             <Link className={styles.link} to='/'><i class="fa-solid fa-circle-user"></i></Link>
           </div>
        </div>

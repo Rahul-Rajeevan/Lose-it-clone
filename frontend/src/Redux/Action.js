@@ -18,9 +18,9 @@ export const getBook=(params)=>(dispatch)=>{
 
 export const login=(payload)=>(dispatch)=>{
    dispatch({type:LOGIN_LOADING})
-   axios.post("'https://dry-plateau-25724.herokuapp.com/user/login'",payload).then((r)=>{ 
+   axios.post("https://dry-plateau-25724.herokuapp.com/user/login",payload).then((r)=>{ 
       console.log(r.data)
-   dispatch({type:LOGIN_SUCCESS,payload:r.data})
+   dispatch({type:LOGIN_SUCCESS,payload:r.data.token})
    }).catch(()=>{
     dispatch({type:LOGIN_ERROR})
    })
@@ -28,6 +28,7 @@ export const login=(payload)=>(dispatch)=>{
 
 
 export const logout=()=>(dispatch)=>{
+   console.log("Logout")
    dispatch({type:LOGOUT_SUCCESS})
 }
 

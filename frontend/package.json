@@ -15,10 +15,17 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
+    "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
+=======
     "swiper": "^8.4.2",
+>>>>>>> 3c1276fcfece913ea02a047482d0763027d0b29f
     "styled-components": "^5.3.6",
+    "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
