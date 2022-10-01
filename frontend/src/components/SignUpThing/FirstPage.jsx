@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const FirstPage = () => {
@@ -35,8 +36,12 @@ const FirstPage = () => {
           <Container2Inside>
             <Heading>Have you counted calories before?</Heading>
             <Heading></Heading>
+            <Link to="/enterdatas">
             <Button>Yes</Button>
+            </Link >
+            <Link to="/enterdatas">
             <Button>No</Button>
+            </Link>
           </Container2Inside>
         </Container2>
       </InsideContainer>

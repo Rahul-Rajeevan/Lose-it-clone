@@ -1,16 +1,43 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 const FourthPage = () => {
-  const [signup, setSignup] = [
-    {
-      username: "",
-      email: "",
-      password: "",
-    },
-  ];
+  const [signup, setSignup] = useState({
+    email: "",
+    password: "",
+  });
+  const [state, setState] = useState("Signup");
+  const navigate = useNavigate();
 
   const onChangeInput = (e) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
+    console.log(signup);
+  };
+  // https://dry-plateau-25724.herokuapp.com/user/signup
+  const handleClick = () => {
+    if (signup.email && signup.password) {
+      setState("Loading...");
+
+      return axios
+        .post("https://dry-plateau-25724.herokuapp.com/user/signup", signup)
+        .then(() => {
+          alert("Signup Successfull");
+        })
+        .then(() => {
+          navigate("/login");
+        })
+        .catch(() => {
+          alert("SignUp Failed Try Again!!!");
+        });
+      } else {
+        alert("No data is found , please write data")
+
+    }
+
+    setTimeout(() => {
+      setState("Signup");
+    }, 2000);
   };
   return (
     <Container>
@@ -24,9 +51,9 @@ const FourthPage = () => {
             placeholder="Your Name"
             name="username"
             required
-            onChange={(e) => {
-              onChangeInput(e);
-            }}
+            // onChange={(e) => {
+            //   onChangeInput(e);
+            // }}
           />
         </Box2>
         <Box2>
@@ -34,9 +61,8 @@ const FourthPage = () => {
             placeholder="Email"
             name="email"
             required
-            onChange={(e) => {
-              onChangeInput(e);
-            }}
+            type="email"
+            onChange={onChangeInput}
           />
         </Box2>
         <Box2>
@@ -44,9 +70,7 @@ const FourthPage = () => {
             placeholder="Password"
             type="password"
             name="password"
-            onChange={(e) => {
-              onChangeInput(e);
-            }}
+            onChange={onChangeInput}
             required
           />
         </Box2>
@@ -54,7 +78,7 @@ const FourthPage = () => {
           <InputBox placeholder="Confirm Password" type="password" required />
         </Box2>
 
-        <ButtonBox>SignUp</ButtonBox>
+        <ButtonBox onClick={handleClick}>{state}</ButtonBox>
       </InsideContainer>
     </Container>
   );
@@ -127,14 +151,14 @@ const InputBox = styled.input`
 
 const ButtonBox = styled.button`
   font-size: 24px;
-  font-weight: 900;
+  font-weight: 700;
   text-align: center;
   padding: 12px 12px;
   background-color: #f7941d;
   z-index: 1.4;
   width: 20%;
   font-size: 20px;
-  font-weight: 600;
+  /* font-weight: 600; */
   margin: auto;
   color: #173962;
   display: flex;

@@ -20,8 +20,8 @@
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
-    "swiper": "^8.4.2",
     "styled-components": "^5.3.6",
+    "swiper": "^8.4.2",
     "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },
