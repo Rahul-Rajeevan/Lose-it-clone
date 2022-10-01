@@ -49,7 +49,7 @@ const AppSection = () => {
                 >
                   Track the foods you love and lose weight
                 </Text>
-                <NavLink to="/signup">
+                <NavLink to="/signupheader">
                   <Button
                     bg="#183962"
                     color="white"

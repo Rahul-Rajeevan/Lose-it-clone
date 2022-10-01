@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ThirdPage = () => {
@@ -51,6 +52,14 @@ const ThirdPage = () => {
                 <Heading2>3765 Calories</Heading2>
               </Right1>
             </BoxRight>
+          </Box1>
+          <Box1>
+            <Link to="/signup">
+            <Button>
+              Get Lose it!
+            </Button>
+            </Link>
+           
           </Box1>
         </Box>
       </InsideContainer>
@@ -146,6 +155,16 @@ const Heading2 = styled.p`
   font-size: 18px;
   padding-left: 5px;
   font-weight: 500;
+`;
+
+const Button = styled.button`
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    background: #ff9400;
+    border-color: #ff9400;
+    width: 200px;
+    margin: 10px auto;
 `;
 
 export default ThirdPage;

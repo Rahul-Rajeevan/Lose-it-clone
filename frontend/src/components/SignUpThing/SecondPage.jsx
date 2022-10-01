@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SecondPage = () => {
@@ -42,7 +43,9 @@ const SecondPage = () => {
           </div>
         </Box1>
         <Box1>
-          <ButtonBox>Continue</ButtonBox>
+          <Link to="/caloriedata">
+            <ButtonBox>Continue</ButtonBox>
+          </Link>
         </Box1>
       </InsideContainer>
     </Container>

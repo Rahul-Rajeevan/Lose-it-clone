@@ -32,3 +32,10 @@ export const logout=()=>(dispatch)=>{
    dispatch({type:LOGOUT_SUCCESS})
 }
 
+//  export const signup = (payload) => async(dispatch) =>{
+//      try{
+        
+//      }catch(err){
+//       console.log("error while posting the data frontend",err.message)
+//      }
+//  }
