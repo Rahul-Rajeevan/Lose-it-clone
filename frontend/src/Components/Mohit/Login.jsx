@@ -1,26 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from "./Login.module.css"
 import axios from "axios"
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../Redux/Action'
 //https://dry-plateau-25724.herokuapp.com/
 const Login = () => {
-const handleSubmit=()=>{
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+const {isAuth}=useSelector((state)=>state.AuthReducer)
+
+  const handleSubmit=()=>{
     const email=document.getElementById("email").value
     const password=document.getElementById("password").value
-    if(!email || !password){return}
-    //make api call
-    console.log(email,password)
-    axios.post('https://dry-plateau-25724.herokuapp.com/user/login', {
-        email: email,
-        password: password
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    
+  dispatch(login(
+      {
+       email,
+       password
+      }))
 }
+
+useEffect(() => {
+if(isAuth)
+{
+  navigate("/")
+}
+}, [isAuth])
+// const handleSubmit=()=>{
+//     const email=document.getElementById("email").value
+//     const password=document.getElementById("password").value
+//     if(!email || !password){return}
+//     //make api call
+//     console.log(email,password)
+//     axios.post('https://dry-plateau-25724.herokuapp.com/user/login', {
+//         email: email,
+//         password: password
+//       })
+//       .then(function (response) {
+//         console.log(response);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//       });
+    
+// }
 
 
   return (<>
