@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import style from "./Login.module.css"
-import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../Redux/Action'
@@ -8,7 +7,7 @@ import { login } from '../../Redux/Action'
 const Login = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
-const {isAuth}=useSelector((state)=>state.AuthReducer)
+const {isAuth,isLoading,error}=useSelector((state)=>state.AuthReducer)
 
   const handleSubmit=()=>{
     const email=document.getElementById("email").value
@@ -23,7 +22,7 @@ const {isAuth}=useSelector((state)=>state.AuthReducer)
 useEffect(() => {
 if(isAuth)
 {
-  navigate("/")
+  navigate("/landing")
 }
 }, [isAuth])
 // const handleSubmit=()=>{
@@ -44,8 +43,8 @@ if(isAuth)
 //       });
     
 // }
-
-
+if(error)
+alert("Invalid Credentials")
   return (<>
     <div className={style.main}>
         <div id='upper_login'>
@@ -56,7 +55,7 @@ if(isAuth)
             <input id='password' className={style.email_input} type="text" />
             <div className={style.login_but}  onClick={handleSubmit} >
                 <div className={style.empty_div}></div>
-                Login
+                {isLoading?"Loading":"Login"}
                 </div>
             
 

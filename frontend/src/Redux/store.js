@@ -3,7 +3,6 @@ import thunk from 'redux-thunk'
 import { AuthReducer } from './AuthReducer'
 import { Reducer } from './Reducer'
 
-const composeEnhancers=window._REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose
 
 const RootReducer=combineReducers({
     AuthReducer:AuthReducer,
@@ -12,6 +11,5 @@ const RootReducer=combineReducers({
 
 
 export const store=legacy_createStore(
-    RootReducer,
-    composeEnhancers( applyMiddleware(thunk) )
+    RootReducer, applyMiddleware(thunk) 
     )

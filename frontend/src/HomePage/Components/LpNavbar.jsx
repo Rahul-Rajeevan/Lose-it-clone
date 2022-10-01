@@ -1,10 +1,11 @@
 import { Button, HStack, Image, useMediaQuery, VStack } from "@chakra-ui/react";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import loseitLogo from "../Assets/loseitLogo.svg";
 
 const LpNavbar = () => {
   const [isMobileScreen] = useMediaQuery("(min-width: 720px)");
+  const navigate=useNavigate()
   return (
     <>
       {isMobileScreen ? (
@@ -31,6 +32,7 @@ const LpNavbar = () => {
             _hover={{
               opacity: 0.8,
             }}
+          onClick={()=>navigate("/login")}
           >
             Login
           </Button>

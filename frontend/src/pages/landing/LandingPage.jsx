@@ -1,43 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react'
-
-import { 
-  Box, 
-  Flex, 
-  Spacer, 
-  Text, 
-  Image, 
-  Button, 
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem, 
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,} from '@chakra-ui/react';
- 
-
+import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem} from '@chakra-ui/react';
 import styles from './LandingPage.module.css'
 import LandingPageNav from '../../Components/LandingPageNav/LPN';
-const LandingPage = () => {
+import { useSelector } from 'react-redux';
 
+const LandingPage = () => {
+  const {token}=useSelector((state)=>state.AuthReducer)||localStorage.getItem("token")
   // code for food search
   const [suggestions, setSuggestions] = useState([]);
   const [food, setFood] = useState([]);
   const [query, setQuery] = useState("");
   const getfoodData = () => {
-    fetch("https://dry-plateau-25724.herokuapp.com/food",{method:"GET",
-  headers:{"Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjIzMjNzZHNmc2RmZHNkZnNmIiwiaWF0IjoxNjY0NDM1MzkzfQ.WTJ8HQBA6fXrikVc9rSKv2giq1k1AaGRYeFjx7djLHc"}
-  })
-  .then(r=>r.json())
-  .then(res=> setFood(res))
+    fetch("https://dry-plateau-25724.herokuapp.com/food",{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setFood(res))
   }
-  const handleInputTextChange = useCallback((e) => {
+  const handleInputTextChange = (e) => {
     setQuery(e.target.value);
-  }, []);
+  }
   useEffect(() => {
     if (query === "") {
       setSuggestions([])
