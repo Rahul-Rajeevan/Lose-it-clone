@@ -10,7 +10,7 @@ const LpNavbar = () => {
     <>
       {isMobileScreen ? (
         <HStack justifyContent="space-between" p="20px">
-          <NavLink>
+          <NavLink to="/">
             <Image
               src={loseitLogo}
               w="200px"
@@ -20,6 +20,7 @@ const LpNavbar = () => {
               }}
             />
           </NavLink>
+<<<<<<< HEAD
           <Button
             bg="#ff9400"
             fontSize="1em"
@@ -36,10 +37,29 @@ const LpNavbar = () => {
           >
             Login
           </Button>
+=======
+          <NavLink to="/login">
+            <Button
+              bg="#ff9400"
+              fontSize="1em"
+              fontWeight="400"
+              textAlign="center"
+              p="10px, 40px"
+              w="119px"
+              h="41px"
+              color="white"
+              _hover={{
+                opacity: 0.8,
+              }}
+            >
+              Login
+            </Button>
+          </NavLink>
+>>>>>>> 3c1276fcfece913ea02a047482d0763027d0b29f
         </HStack>
       ) : (
         <VStack mt="15px">
-          <NavLink>
+          <NavLink to="/">
             <Image
               src={loseitLogo}
               w="200px"
