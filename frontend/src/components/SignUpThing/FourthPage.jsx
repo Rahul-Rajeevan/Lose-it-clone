@@ -162,6 +162,8 @@ const ButtonBox = styled.button`
   margin: auto;
   color: #173962;
   display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   margin-bottom: 20px;
 `;
