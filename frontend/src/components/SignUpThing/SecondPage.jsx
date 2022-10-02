@@ -125,7 +125,11 @@ const ButtonBox = styled.button`
   margin: auto;
   color: #173962;
   display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  border-radius: 8px;
+  border : 2px solid #173962
 `;
 
 export default SecondPage;
