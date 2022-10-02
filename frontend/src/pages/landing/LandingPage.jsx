@@ -1,33 +1,73 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem} from '@chakra-ui/react';
+import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter} from '@chakra-ui/react';
 import styles from './LandingPage.module.css'
 import LandingPageNav from '../../Components/LandingPageNav/LPN';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const LandingPage = () => {
   const {token}=useSelector((state)=>state.AuthReducer)||localStorage.getItem("token")
+  const { isOpen, onOpen, onClose } = useDisclosure()
   // code for food search
+  const [list, setList] = useState([])
+  const [afternoon, setafternoon] = useState([])
   const [suggestions, setSuggestions] = useState([]);
+  const [morning, setMorning] = useState([])
+  const [dinner, setdinner] = useState([])
+  const [snack, setSnack] = useState([])
+  const [exercice, setExercice] = useState([])
   const [query, setQuery] = useState("");
   const getfoodData = () => {
-    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+    fetch(`http://localhost:8080/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}})
   .then(r=>r.json()).then(res=> setSuggestions(res))
   }
   const handleInputTextChange = (e) => {
     setQuery(e.target.value);
   }
+
+
+const toarray=async()=>{
+ await axios.post("http://localhost:8080/day/details",{date:1},{headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}}).then(r=>{
+ console.log(r.data)   
+ setMorning(r.data.morning); setafternoon(r.data.afternoon); setSnack(r.data.snack); setdinner(r.data.dinner)
+})
+}
+
+const getItem=(id,val)=>{
+axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}})
+  .then(res=> {console.log(res.data)
+    if(val===1)
+    setMorning([...morning,res.data])
+    else if(val===2)
+    setafternoon([...afternoon,res.data])
+    else if(val===3)
+    setdinner([...dinner,res.data])
+    else if(val===4)
+    setSnack([...snack,res.data])
+    console.log(morning,afternoon)
+  }).then(async(r)=>{
+   await axios.post("http://localhost:8080/day",{morning,afternoon,dinner,snack,date:1},{headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}}).then(r=>console.log(list))
+      
+  })
+  
+}
+
   useEffect(() => {
     if (query === "") {
       setSuggestions([])
     } else {
       getfoodData();
       }
+
+  toarray();
+  // console.log(morning,afternoon);
   }, [query])
 
 
    // code for food search
   return (
     <div className={styles.background} >
+      
       <LandingPageNav/>
       {/* food exercice date section start */}
       <Flex mt={'50px'} mb={'5px'} className={styles.food_ex_date} >
@@ -119,6 +159,23 @@ const LandingPage = () => {
             </table>
             {/* Breakfast start */}
             <Box>
+            <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Item</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Hello</Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>ADD</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
@@ -130,7 +187,7 @@ const LandingPage = () => {
                     <Box className={styles.dropdown}>
                     {
                       suggestions.map((food)=>(
-                        <Box>
+                        <Box cursor="pointer" onClick={()=>{ getItem(food._id,1)}}>
                           <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
                             <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
                             <Text>{food.name}</Text>
@@ -147,13 +204,25 @@ const LandingPage = () => {
               <Box minHeight={'70px'} backgroundColor={'white'}>
                 <table style={{ "width": "100%" }} >
                   <tbody>
-                    <tr>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                    </tr>
+                    
+                      {morning.map(e=>
+                      <tr key={e._id}>
+                      <td>
+                       <Flex>
+                       <Spacer/>
+                        <Image src={e.url} width="4%" />
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.name}</Text>
+                        <Spacer/><Spacer/><Spacer/><Spacer/><Spacer/>
+                        <Text>{e.unit}</Text>
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.cal}</Text>
+                        <Spacer/><Spacer/>
+                        </Flex> 
+                        </td>
+                      </tr>
+                      )}
+                  
                   </tbody>
                 </table>
               </Box>
@@ -165,20 +234,48 @@ const LandingPage = () => {
                 <thead>
                   <tr>
                     <th className={styles.eating} colspan="4">Lunch: <span>0</span></th>
-                    <th><input type='text' className={styles.input} placeholder='search & Add food' /></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
+                    {/* <th><input type='text' className={styles.input} placeholder='search & Add food' /></th> */}
                   </tr>
+                  {
+                    suggestions.length > 0 ?
+                    <Box className={styles.dropdown}>
+                    {
+                      suggestions.map((food)=>(
+                        <Box cursor="pointer" onClick={()=>{ getItem(food._id,2)}}>
+                          <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
+                            <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
+                            <Text>{food.name}</Text>
+                          </Flex>
+                        </Box>
+                      ))
+                    }
+                    </Box>
+                    :""
+                  }
+                 
                 </thead>
               </table>
               <Box minHeight={'70px'} backgroundColor={'white'}>
                 <table style={{ "width": "100%" }} >
                   <tbody>
-                    <tr>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                    </tr>
+                  {afternoon.map(e=>
+                      <tr key={e._id}>
+                      <td>
+                       <Flex>
+                       <Spacer/>
+                        <Image src={e.url} width="4%" />
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.name}</Text>
+                        <Spacer/><Spacer/><Spacer/><Spacer/><Spacer/>
+                        <Text>{e.unit}</Text>
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.cal}</Text>
+                        <Spacer/><Spacer/>
+                        </Flex> 
+                        </td>
+                      </tr>
+                      )}
                   </tbody>
                 </table>
               </Box>
@@ -191,20 +288,46 @@ const LandingPage = () => {
                 <thead>
                   <tr>
                     <th className={styles.eating} colspan="4">Dinner: <span>0</span></th>
-                    <th><input type='text' className={styles.input} placeholder='search & Add food' /></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
                   </tr>
+                  {
+                    suggestions.length > 0 ?
+                    <Box className={styles.dropdown}>
+                    {
+                      suggestions.map((food)=>(
+                        <Box cursor="pointer" onClick={()=>{ getItem(food._id,3)}}>
+                          <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
+                            <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
+                            <Text>{food.name}</Text>
+                          </Flex>
+                        </Box>
+                      ))
+                    }
+                    </Box>
+                    :""
+                  }
                 </thead>
               </table>
               <Box minHeight={'70px'} backgroundColor={'white'}>
                 <table style={{ "width": "100%" }} >
                   <tbody>
-                    <tr>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                    </tr>
+                  {dinner.map(e=>
+                      <tr key={e._id}>
+                      <td>
+                       <Flex>
+                       <Spacer/>
+                        <Image src={e.url} width="4%" />
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.name}</Text>
+                        <Spacer/><Spacer/><Spacer/><Spacer/><Spacer/>
+                        <Text>{e.unit}</Text>
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.cal}</Text>
+                        <Spacer/><Spacer/>
+                        </Flex> 
+                        </td>
+                      </tr>
+                      )}
                   </tbody>
                 </table>
               </Box>
@@ -219,20 +342,46 @@ const LandingPage = () => {
                 <thead>
                   <tr>
                     <th className={styles.eating} colspan="4">Snacks: <span>0</span></th>
-                    <th><input type='text' className={styles.input} placeholder='search & Add food' /></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
                   </tr>
+                  {
+                    suggestions.length > 0 ?
+                    <Box className={styles.dropdown}>
+                    {
+                      suggestions.map((food)=>(
+                        <Box cursor="pointer" onClick={()=>{ getItem(food._id,4)}}>
+                          <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
+                            <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
+                            <Text>{food.name}</Text>
+                          </Flex>
+                        </Box>
+                      ))
+                    }
+                    </Box>
+                    :""
+                  }
                 </thead>
               </table>
               <Box minHeight={'70px'} backgroundColor={'white'}>
                 <table style={{ "width": "100%" }} >
                   <tbody>
-                    <tr>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                    </tr>
+                  {snack.map(e=>
+                      <tr key={e._id}>
+                      <td>
+                       <Flex>
+                       <Spacer/>
+                        <Image src={e.url} width="4%" />
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.name}</Text>
+                        <Spacer/><Spacer/><Spacer/><Spacer/><Spacer/>
+                        <Text>{e.unit}</Text>
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.cal}</Text>
+                        <Spacer/><Spacer/>
+                        </Flex> 
+                        </td>
+                      </tr>
+                      )}
                   </tbody>
                 </table>
               </Box>

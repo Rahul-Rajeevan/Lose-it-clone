@@ -19,10 +19,11 @@ export const getBook=(params)=>(dispatch)=>{
 export const login=(payload)=>(dispatch)=>{
    dispatch({type:LOGIN_LOADING})
    axios.post("https://dry-plateau-25724.herokuapp.com/user/login",payload).then((r)=>{ 
-      console.log(r.data)
+   if(r.data.token)
    dispatch({type:LOGIN_SUCCESS,payload:r.data.token})
-   }).catch(()=>{
-    dispatch({type:LOGIN_ERROR})
+   else
+   {alert("Invalid credentials")
+   dispatch({type:LOGIN_ERROR})}
    })
 }
 

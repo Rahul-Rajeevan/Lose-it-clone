@@ -43,8 +43,8 @@ if(isAuth)
 //       });
     
 // }
-if(error)
-alert("Invalid Credentials")
+// if(error)
+// alert("Invalid Credentials")
   return (<>
     <div className={style.main}>
         <div id='upper_login'>
