@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter} from '@chakra-ui/react';
+import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Progress} from '@chakra-ui/react';
 import styles from './LandingPage.module.css'
 import LandingPageNav from '../../Components/LandingPageNav/LPN';
 import { useSelector } from 'react-redux';
@@ -17,8 +17,26 @@ const LandingPage = () => {
   const [snack, setSnack] = useState([])
   const [exercice, setExercice] = useState([])
   const [query, setQuery] = useState("");
+  const [date, setDate] = useState(10)
+  const [total, setTotal] = useState(0)
+
+  var today = new Date();
+  let date123 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+const [show, setshow] = useState(date123)
+const [number, setNumber] = useState(today.getDate()-1)
+
+const changedate=(val)=>{
+setNumber(number+val)
+console.log(number)
+let date12 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+number;
+console.log(date12)
+  setshow(date12)
+toarray();
+}
+
+
   const getfoodData = () => {
-    fetch(`http://localhost:8080/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}})
+    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
   .then(r=>r.json()).then(res=> setSuggestions(res))
   }
   const handleInputTextChange = (e) => {
@@ -27,14 +45,23 @@ const LandingPage = () => {
 
 
 const toarray=async()=>{
- await axios.post("http://localhost:8080/day/details",{date:1},{headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}}).then(r=>{
+ await axios.post("https://dry-plateau-25724.herokuapp.com/day/details",{date},{headers:{"Authorization":`Bearer ${token}`}}).then(r=>{
  console.log(r.data)   
- setMorning(r.data.morning); setafternoon(r.data.afternoon); setSnack(r.data.snack); setdinner(r.data.dinner)
+ setMorning(r.data.morning); setafternoon(r.data.afternoon); setSnack(r.data.snack); setdinner(r.data.dinner);
+ let y=[];
+    y=[...morning,...afternoon,...dinner,...snack]
+    let q=0;
+    for(let i of y)
+    {
+      console.log(i)
+      q+=i.cal;
+    }
+setTotal(q)
 })
 }
 
 const getItem=(id,val)=>{
-axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}})
+axios.get(`https://dry-plateau-25724.herokuapp.com/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
   .then(res=> {console.log(res.data)
     if(val===1)
     setMorning([...morning,res.data])
@@ -44,9 +71,9 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
     setdinner([...dinner,res.data])
     else if(val===4)
     setSnack([...snack,res.data])
-    console.log(morning,afternoon)
+
   }).then(async(r)=>{
-   await axios.post("http://localhost:8080/day",{morning,afternoon,dinner,snack,date:1},{headers:{"Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IncxMjMiLCJpYXQiOjE2NjQ2NTA3NTR9.0-JYmMiu9q_7PpimCzZ7pliGfEQnHZi3c-2GSpAmzno`}}).then(r=>console.log(list))
+   await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date},{headers:{"Authorization":`Bearer token`}}).then(r=>console.log(list))
       
   })
   
@@ -61,7 +88,7 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
 
   toarray();
   // console.log(morning,afternoon);
-  }, [query])
+  }, [query,date])
 
 
    // code for food search
@@ -70,7 +97,7 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
       
       <LandingPageNav/>
       {/* food exercice date section start */}
-      <Flex mt={'50px'} mb={'5px'} className={styles.food_ex_date} >
+      <Flex mt={'3%'} mb={'5px'} className={styles.food_ex_date} >
         <Box>
           <Flex>
           {/* Add food button start */}
@@ -137,9 +164,15 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
           </Flex>
         </Box>
         <Spacer />
-        <Box>
-          <Text>Calender</Text>
-        </Box>
+        <Flex gap="2rem" margin="auto" alignItems="center" mt="2%">
+        <Button colorScheme='blue' onClick={()=>{setDate(date-1);
+        changedate(-1)
+        }}>{`<`}</Button>
+        <Text>{show}</Text>
+        <Button colorScheme='blue' onClick={()=>{setDate(date+1);
+changedate(1)
+        }}>{`>`}</Button>
+        </Flex>
       </Flex>
       {/* food exercice date section end */}
       {/*  budget food section start  */}
@@ -149,11 +182,11 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
             <table className={styles.table_top}>
               <thead>
                 <tr>
-                  <th className={styles.gray_heading} >Budget<Text color={'blackAlpha.900'}>2,160</Text></th>
-                  <th className={styles.gray_heading}>Food<Text color={'blackAlpha.900'}>2,160</Text></th>
-                  <th className={styles.gray_heading}>Exercise<Text color={'blackAlpha.900'}>2,160</Text></th>
-                  <th className={styles.gray_heading}>Net<Text color={'blackAlpha.900'}>2,160</Text></th>
-                  <th className={styles.gray_heading}>Under<Text color={'blackAlpha.900'}>2,160</Text></th>
+                  <th className={styles.gray_heading} >Budget<Text color={'blackAlpha.900'}>2,200</Text></th>
+                  <th className={styles.gray_heading}>Food<Text color={'blackAlpha.900'}></Text></th>
+                  <th className={styles.gray_heading}>Exercise<Text color={'blackAlpha.900'}></Text></th>
+                  <th className={styles.gray_heading}>Net<Text color={'blackAlpha.900'}></Text></th>
+                  <th className={styles.gray_heading}>Under<Text color={'blackAlpha.900'}></Text></th>
                 </tr>
               </thead>
             </table>
@@ -417,7 +450,18 @@ axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"applic
           </Box>
           <Spacer />
           <Box className={styles.range_box}>
-          </Box>
+          <Progress colorScheme='green' height='32px' value={Math.ceil(total/22)} />
+          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Daily calorie budget</Text><Text fontSize='xs'>2200</Text></Flex>
+          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Food calories consumed</Text><Text fontSize='xs'>{total}</Text></Flex>
+          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Exercise calories burned</Text><Text fontSize='xs'></Text></Flex>
+          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Net calories so far today</Text><Text fontSize='xs'></Text></Flex>
+          <br/>
+          <Flex direction='column' boxShadow='lg' width="59%" height="50%" margin="auto" backgroundColor="#f4fcff">
+          <Image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAAB3CAYAAACkGBRHAAAIHElEQVR42u2cSYwjVx3Gk0gJSTgiFLgEKTnNAWmOhAsScIFICI1EpEhhWMQlaHJILoCEEgkRAYqiEUFciFAYkoACRAMhCnsGEpih2263Pe2tq1yLa3PZVd6X9lb+817PgPD06k7Xs13+ftIna8ruHpfr+/m95yr3bbcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABg4ZFLpQ+qjv+Ybld/otn+VZaKbvsjdksrkLpmeymW11Tbv6A7/hk0AhwKEd2uW97DmuW9xQo0XhFRjplqkotkmuY9aAqYQit5n2AF2YQkR8bVLP9x9kZzB1qz4riu+35WiJ9Cihlj+euGUX4QDVpRiq77ACtCZkEK2VCtSkoxyu/IReePkmq8IanW7/I3b2XNeqtguFdUsxJnaxF7QZ5zk09z0aQVQzFrH2UHvzSv4jFRlG3FWNvK5HOJxOZQkiSybZt836dms0mdTod6vd7/wv/Nt1erVXIchyRZnqS2MnpO0tYVw92a44cZgWr559Go1RpxhIujWJ6Vk9V4YjPZNgxjV4bBYEBBENBJmEwmNBwOqdVqkWVZo2xOSilmeR4jaaA7/jk0azXWOEILxqZacjqT39Z1ndrtNo3H42MLErBR5tiPZRJ2u10qmnZJ1p2EYIH6mlU5i4ZF+VM1oR8OVPx0Tsrw6Vi/398dKfaj0+vTt55/hZI5bWp7/9LPqHbfB2jwm19PbV9LSfTti7+gwXB0oEh8RCuVyrZqliVR+8umjjKbUt6LlkX242gxRSropZSqaQO+XjlImv+SUyy676Gv0BPfeXFqe++5H+zKw2//ny9/40e7jzcc78jRiEurWyU+CgVi1nL+s2haxOAnQEWdx8kr+iZf+O+3ltlWbXr1jXdumW5N6KFHvkmf/dp3jyXPJ7/4NH3q/DN7fvdLr79NiuHuuzaq+HWZPbeWgP0fKHbtfjQuQuxeOSBCHFnb5Av4g0abp7730u6oYZb8qe2v/+kaff7r3z+WPJ/+0jP0538mp7ZlZGP39z79w18eOAo1mi2dPccdAdO3F9C4KE3ZblxyE2ppJM1K8A8EDoNLc+YzT9Dfrl3fc5/tVo8lz62P4/z+7Rid/dxTVPYbh/7/tUY7J+BNpIW1T0TgF3mGfa2aanlmvdHYM+LEtgr089/+fWqbywre7fWPXK8cJM9+tDo9qlSbU9te/NVf6Hpe3/NYq1zbCF8g71E0LwLwq6PDLotZcuX91jg/fuUP9KGPf5VNZSozn8eZRZ5bSd+cxl26fGXPfaPxmE/duqG+Jo5/Cc2LwnrnxtcKQrzOy7N2dnYOLPJfr6b2rHHClqdoe/SP9cyB9zuVRjzkNxQDzYvGuZ2rYRal6HjvnvQqgbDkOYpOrx/6+R/+CSfat/zyVMIsSdmrv0shEKY8QTAJ/bxPPE53on1LP20L96LJerOztmzycPg5mTBfl3Sa7kL7ln/kCfUdttFqX1tSecKNpt2N9kGeQ+PVWks3bRuOxi3IA+Yuj1GubSybPI12Lwl5wNzl4Ze8sAX4cJnkMdxaBvKARZCH3Gorvizy9PpDXcjV5ZAH8hz3y2D94aiy6PJMJpOg6FRVyAMWSR7SnWrxNKdvYcjjeA1x3zCFPMuPyi/cFBTNqUqnJdBpy8OnlkJfC8gDeWYNG4H00XjcWBR5+FTNrjQ2Rb8OkCcK8lgezSGtZrubOQ15dp5/7sS/oz8YObrta/N4DSAP5HlPMUrVzHA4Kp+k+KONOLW/cI7GmfTMPzsOgn7Ja8TYcxjPa98hD+Q5lZhuLdnrD4sUMsPRuO76TS5Nd977DHkgz6mGTaHMSr213h+O3NMSZjQO2rVmd6PIRrlF2lfIA3nCK5flVc1SLeExmdrdfpaNGrXD/kwVv4uJ0unuDArVZidmV+oxzfaLC7t/kAfyzCEd/qd52a3BUrx5W1+2/YA8kAeBPJAHgTwA8kAeIAa2fiBEfCAP5EEgD+RBIA+YVR6zQoj4QB7Ig0AeyINAHjAjBXYgEfGBPJAHgTyQB4E8APJAHgB5IA9YbHmMMiHiA3kigMwOJCI+kAfyIJAH8iCQB0AeyAPEIBVdQsQH8kAeBPJAHgTyAMgDeYAYttmBRMQH8kRBHr1EiPhAHsiDQJ7VJc8OJCI+kAfyIJBnheXRHELEB/JEgBw7kIj4QB7Ig0AeyINAHjAjWdUmRHwgD+RBIA/kQSAPmJGMYhEiPpAH8iCQZ3VJswOJiA/kiYI8BZMQ8YE8EWCLHUhEfCAP5EEgzwrLIxuEiI8sy+9D+5ac67JRZyFEbNLp9F1o37LLIxkplFl8GHegfcsuz3bxtZRUJERo6mheJOTRL6DMYnNdKr6J5kWADUk/k2QHFBEY2XgSzYsIyW09yUKIkATxrP5htC468lzYZAcWERJM2aLEVdO8J7GtuYm8Rki42chqH0PjIgY7sI+j3CGLk9cuo2kRhJ932Mip6yyEhJJOIqt+BE2LKHFZfpAd5CaKHkLy6mNoWNQFyioPswQshJxOYlnlIpq1IsSyhfPsgAexGwceeW95mU2Jb0erVoj1LeVcLFPosxBywqTlixBnVQVKS2fXMgV5nRUBmSVKZz0jY42z8muguHPvWkZ+di0tD1gIOSJb8uV/4VM1MCVRWrl/bUt6gRWkBUn2JGAj9Jv/zso4AQqOGInS0qOsMJdYjBUWps6FYbdPxrNZXKsGZocviOPx+J38m5FXNO3uKId/dZrvJ77IBgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALCf/AQ1EP9FkIjyhAAAAAElFTkSuQmCC"/>
+         <Text fontSize='md' color="blue">Do more with Lose It ! Premium</Text>
+          <Text fontSize='xs'>Plan meals, customize goals and more!</Text>
+          </Flex>
+           </Box>
         </Flex>
       </Box>
       {/*  budget food section start  */}
