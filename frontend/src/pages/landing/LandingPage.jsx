@@ -12,14 +12,22 @@ const LandingPage = () => {
   const [list, setList] = useState([])
   const [afternoon, setafternoon] = useState([])
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestions1, setSuggestions1] = useState([]);
+  const [suggestions2, setSuggestions2] = useState([]);
+  const [suggestions3, setSuggestions3] = useState([]);
+  const [suggestions4, setSuggestions4] = useState([]);
+  const [suggestions5, setSuggestions5] = useState([]);
   const [morning, setMorning] = useState([])
   const [dinner, setdinner] = useState([])
   const [snack, setSnack] = useState([])
-  const [exercice, setExercice] = useState([])
-  const [query, setQuery] = useState("");
+  const [query1, setQuery1] = useState("");
+  const [query2, setQuery2] = useState("");
+  const [query3, setQuery3] = useState("");
+  const [query4, setQuery4] = useState("");
+  const [query5, setQuery5] = useState("");
   const [date, setDate] = useState(10)
   const [total, setTotal] = useState(0)
-
+const [exercise, setexercise] = useState([])
   var today = new Date();
   let date123 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 const [show, setshow] = useState(date123)
@@ -34,35 +42,53 @@ console.log(date12)
 toarray();
 }
 
+const getexerciseData=()=>{
+  let token=localStorage.getItem("token")
+  fetch(`https://dry-plateau-25724.herokuapp.com/exercise?name=${query5}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions5(res))}
 
-  const getfoodData = () => {
-    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
-  .then(r=>r.json()).then(res=> setSuggestions(res))
+
+  const getfoodData = (gh) => {
+    if(gh==="query1"&&query1!=="")
+    {console.log("getfooddata trigerred by query1")
+      fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query1}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions1(res))}
+  else if(gh==="query2"&&query2!=="")
+    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query2}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions2(res))
+  else if(gh==="query3"&&query3!=="")
+    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query3}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions3(res))
+  else if(gh==="query4"&&query4!=="")
+    fetch(`https://dry-plateau-25724.herokuapp.com/food?name=${query4}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
+  .then(r=>r.json()).then(res=> setSuggestions4(res))
   }
-  const handleInputTextChange = (e) => {
-    setQuery(e.target.value);
+  const handleInputTextChange1 = (e) => {
+    setQuery1(e.target.value);
   }
-
-
+  const handleInputTextChange2 = (e) => {
+    setQuery2(e.target.value);
+  }
+  const handleInputTextChange3 = (e) => {
+    setQuery3(e.target.value);
+  }
+  const handleInputTextChange4 = (e) => {
+    setQuery4(e.target.value);
+  }
+  const handleInputTextChange5 = (e) => {
+    setQuery5(e.target.value);
+  }
 const toarray=async()=>{
  await axios.post("https://dry-plateau-25724.herokuapp.com/day/details",{date},{headers:{"Authorization":`Bearer ${token}`}}).then(r=>{
  console.log(r.data)   
  setMorning(r.data.morning); setafternoon(r.data.afternoon); setSnack(r.data.snack); setdinner(r.data.dinner);
- let y=[];
-    y=[...morning,...afternoon,...dinner,...snack]
-    let q=0;
-    for(let i of y)
-    {
-      console.log(i)
-      q+=i.cal;
-    }
-setTotal(q)
+ setTotal(r.data.cal); setexercise(r.data.exercise);
 })
 }
 
 const getItem=(id,val)=>{
 axios.get(`https://dry-plateau-25724.herokuapp.com/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
-  .then(res=> {console.log(res.data)
+  .then(res=> {
     if(val===1)
     setMorning([...morning,res.data])
     else if(val===2)
@@ -71,24 +97,73 @@ axios.get(`https://dry-plateau-25724.herokuapp.com/food?id=${id}`,{headers:{"con
     setdinner([...dinner,res.data])
     else if(val===4)
     setSnack([...snack,res.data])
-
+// console.log("data",morning,afternoon,dinner,snack,cal)
   }).then(async(r)=>{
-   await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date},{headers:{"Authorization":`Bearer token`}}).then(r=>console.log(list))
+    let y=[];
+    y=[...morning,...afternoon,...dinner,...snack]
+    let q=0;
+    for(let i of y)
+    {
+      q+=i.cal;
+    }
+    for(let i of exercise)
+    {
+      q-=i.cal
+    }
+let cal=q;
+   await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
       
   })
   
 }
+const getexercise=(id,val)=>{
+  axios.get(`https://dry-plateau-25724.herokuapp.com/exercise?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
+.then(res=> {
+  // console.log(res.data)
+  setexercise([...exercise,res.data])
+})
+.then(async(r)=>{
+      let y=[];
+      y=[...morning,...afternoon,...dinner,...snack]
+      let q=0;
+      for(let i of y)
+      {
+        q+=i.cal;
+      } 
+      for(let i of exercise)
+    {
+      q-=i.cal
+    }  
+  let cal=q;
+     await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))   
+    })
+    
+  }
+
 
   useEffect(() => {
-    if (query === "") {
-      setSuggestions([])
-    } else {
-      getfoodData();
-      }
-
-  toarray();
-  // console.log(morning,afternoon);
-  }, [query,date])
+    toarray();
+if(query1!=="")
+getfoodData("query1");
+if(query2!=="")
+getfoodData("query2");
+if(query3!=="")
+getfoodData("query3");
+if(query4!=="")
+getfoodData("query4");
+if(query5!=="")
+getexerciseData();
+if(query1.length===0)
+setSuggestions1([])
+if(query2.length===0)
+setSuggestions2([])
+if(query3.length===0)
+setSuggestions3([])
+if(query4.length===0)
+setSuggestions4([])
+if(query5.length===0)
+setSuggestions5([])
+  }, [query1,query2,query3,query4,query5,date])
 
 
    // code for food search
@@ -183,7 +258,7 @@ changedate(1)
               <thead>
                 <tr>
                   <th className={styles.gray_heading} >Budget<Text color={'blackAlpha.900'}>2,200</Text></th>
-                  <th className={styles.gray_heading}>Food<Text color={'blackAlpha.900'}></Text></th>
+                  <th className={styles.gray_heading}>Food<Text color={'blackAlpha.900'}>{total}</Text></th>
                   <th className={styles.gray_heading}>Exercise<Text color={'blackAlpha.900'}></Text></th>
                   <th className={styles.gray_heading}>Net<Text color={'blackAlpha.900'}></Text></th>
                   <th className={styles.gray_heading}>Under<Text color={'blackAlpha.900'}></Text></th>
@@ -212,14 +287,14 @@ changedate(1)
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
-                    <th className={styles.eating} colspan="4">Breakfast: <span>0</span></th>
-                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
+                    <th className={styles.eating} colspan="4">Breakfast: <span>{morning.length}</span></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange1} type='text' placeholder='search & Add food' /></th>
                   </tr>
                   {
-                    suggestions.length > 0 ?
+                    suggestions1.length > 0 ?
                     <Box className={styles.dropdown}>
                     {
-                      suggestions.map((food)=>(
+                      suggestions1.map((food)=>(
                         <Box cursor="pointer" onClick={()=>{ getItem(food._id,1)}}>
                           <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
                             <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
@@ -266,15 +341,15 @@ changedate(1)
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
-                    <th className={styles.eating} colspan="4">Lunch: <span>0</span></th>
-                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
+                    <th className={styles.eating} colspan="4">Lunch: <span>{afternoon.length}</span></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange2} type='text' placeholder='search & Add food' /></th>
                     {/* <th><input type='text' className={styles.input} placeholder='search & Add food' /></th> */}
                   </tr>
                   {
-                    suggestions.length > 0 ?
+                    suggestions2.length > 0 ?
                     <Box className={styles.dropdown}>
                     {
-                      suggestions.map((food)=>(
+                      suggestions2.map((food)=>(
                         <Box cursor="pointer" onClick={()=>{ getItem(food._id,2)}}>
                           <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
                             <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
@@ -320,14 +395,14 @@ changedate(1)
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
-                    <th className={styles.eating} colspan="4">Dinner: <span>0</span></th>
-                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
+                    <th className={styles.eating} colspan="4">Dinner: <span>{dinner.length}</span></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange3} type='text' placeholder='search & Add food' /></th>
                   </tr>
                   {
-                    suggestions.length > 0 ?
+                    suggestions3.length > 0 ?
                     <Box className={styles.dropdown}>
                     {
-                      suggestions.map((food)=>(
+                      suggestions3.map((food)=>(
                         <Box cursor="pointer" onClick={()=>{ getItem(food._id,3)}}>
                           <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
                             <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
@@ -374,14 +449,14 @@ changedate(1)
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
-                    <th className={styles.eating} colspan="4">Snacks: <span>0</span></th>
-                    <th><input className={styles.input} onChange={handleInputTextChange} type='text' placeholder='search & Add food' /></th>
+                    <th className={styles.eating} colspan="4">Snacks: <span>{snack.length}</span></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange4} type='text' placeholder='search & Add food' /></th>
                   </tr>
                   {
-                    suggestions.length > 0 ?
+                    suggestions4.length > 0 ?
                     <Box className={styles.dropdown}>
                     {
-                      suggestions.map((food)=>(
+                      suggestions4.map((food)=>(
                         <Box cursor="pointer" onClick={()=>{ getItem(food._id,4)}}>
                           <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
                             <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
@@ -427,21 +502,46 @@ changedate(1)
               <table className={styles.table_top2}>
                 <thead>
                   <tr>
-                    <th className={styles.eating} colspan="4">Exercise: <span>0</span></th>
-                    <th><input type='text' className={styles.input} placeholder='search & Add food' /></th>
+                    <th className={styles.eating} colspan="4">Exercise: <span>{exercise.length}</span></th>
+                    <th><input className={styles.input} onChange={handleInputTextChange5} type='text' placeholder='search & Add food' /></th>
                   </tr>
+                  {
+                    suggestions5.length > 0 ?
+                    <Box className={styles.dropdown}>
+                    {
+                      suggestions5.map((food)=>(
+                        <Box cursor="pointer" onClick={()=>{ getexercise(food._id,5)}}>
+                          <Flex className={styles.food} key={food._id} my={2} mx={5} gap={4}>
+                            <Image height={'25px'} borderRadius='30px' src={food.url} alt="" />
+                            <Text>{food.name}</Text>
+                          </Flex>
+                        </Box>
+                      ))
+                    }
+                    </Box>
+                    :""
+                  }
                 </thead>
               </table>
               <Box minHeight={'70px'} backgroundColor={'white'}>
                 <table style={{ "width": "100%" }} >
-                  <tbody>
-                    <tr>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                      <td><Text></Text></td>
-                    </tr>
+                <tbody>
+                  {exercise.map(e=>
+                      <tr key={e._id}>
+                      <td>
+                       <Flex>
+                       <Spacer/>
+                        <Image src={e.url} width="4%" />
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.name}</Text>
+                        <Spacer/><Spacer/><Spacer/><Spacer/><Spacer/>
+                        <Spacer/><Spacer/><Spacer/>
+                        <Text>{e.cal}</Text>
+                        <Spacer/><Spacer/>
+                        </Flex> 
+                        </td>
+                      </tr>
+                      )}
                   </tbody>
                 </table>
               </Box>

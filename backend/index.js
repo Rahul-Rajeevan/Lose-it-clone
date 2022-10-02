@@ -3,6 +3,7 @@ const { r } = require("./config/db");
 const userRouter = require("./routes/user.route");
 const foodRouter = require("./routes/food.routes");
 const exerciseRouter=require("./routes/exercise.routes")
+const userDayRouter = require("./routes/userDay.routes");
 const app=express();
 module.require("dotenv").config();
 var cors = require('cors')
@@ -21,6 +22,7 @@ app.get("/",(req,res)=>{
 app.use("/user",userRouter)
 app.use("/food",foodRouter)
 app.use("/exercise",exerciseRouter)
+app.use("/day",userDayRouter)
 app.listen(PORT,async()=>{
     await r;
     console.log("Listening");
