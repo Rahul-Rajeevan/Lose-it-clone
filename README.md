@@ -53,9 +53,10 @@ Multi-user support
 <div width="100%">
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193628231-304c52bc-9a0f-4442-b135-0a0cd44cca8b.gif"/>
 <div/>
+Responsive
 <br/><br/>
 <div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191999725-222f4349-695f-405a-ae21-4aa0a6b62f89.gif"/>
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193628231-304c52bc-9a0f-4442-b135-0a0cd44cca8b.gif"/>
 <div/>
 
 
