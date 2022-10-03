@@ -33,10 +33,10 @@ Form validation
 Search for food items by name and get their calorie information using API built by us.
 <br/><br/>
 <div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191992811-985ba05d-720e-4c38-9464-430df60296c6.gif"/>
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193619117-25e4ead0-bdc6-460f-a694-b2f8fccfcde0.jpg"/>
 </div>
 <br/><br/>
-Apply filters using sliders and checkboxes
+Add food you'll be having for breakfast, lunch, dinner, snack, etc and get the total calories
 <br/><br/>
 <div width="100%">
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191995466-641a53c2-2659-4c11-be82-c44d43700db6.gif"/>
