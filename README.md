@@ -42,13 +42,17 @@ Add food you'll be having for breakfast, lunch, dinner, snack, etc and get the t
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193620209-bd8855c4-29a1-4014-b782-08d836013a2a.jpg"/>
 </div>
 <br/><br/>
-<br/><br/>
-Checkout
+View the calorie details of different days
 <br/><br/>
 <div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/192013335-8531df48-4760-4e3e-a8cd-b819334947ff.gif"/>
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193626244-16d37987-2556-4c81-96f3-06c0f484df71.gif"/>
 <div/>
-
+<br/><br/>
+Multi-user support
+<br/><br/>
+<div width="100%">
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193626244-16d37987-2556-4c81-96f3-06c0f484df71.gif"/>
+<div/>
 <br/><br/>
 <div width="100%">
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191999725-222f4349-695f-405a-ae21-4aa0a6b62f89.gif"/>
