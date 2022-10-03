@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/101565872/193611096-613b0772-d682-4abc-a49e-11f710b50f1a.png" height="400px" />
 <h2><i><a href="https://elegant-centaur-093589.netlify.app/">LIVE SITE</a></i></h2>
-<h3>Reliance Digital is India’s fastest growing online retail store for electronic products. This project was completed in 5 days during the Unit Week at Masai School</h3>
+<h3>Website to make counting calories simpler. It was created with the goal of helping members reach a healthy weight by providing them with the tools they need for success.</h3>
 
 <br/>
 
@@ -8,12 +8,12 @@
 
 <ul>
 <li>HTML</li>
-
 <li>CSS</li>
-
 <li>Javascript</li>
-
 <li>React</li>
+<li>Redux</li>
+<li>MongoDB</li>
+<li>Express</li>
 </ul>
 
 <h3><i>External libraries used </i></h3>
@@ -24,7 +24,13 @@
 
 <br/>
 <h2 align="center" >✨ FUNCTIONALITIES ✨<h2/>
-Search for items by name or brand
+
+Form validation
+<br/><br/>
+<div width="100%">
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/192012129-b0c43517-85f1-48f3-ae3d-3f4d00741781.gif"/>
+</div>
+Search for food items by name and get their calorie information using API built by us.
 <br/><br/>
 <div width="100%">
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191992811-985ba05d-720e-4c38-9464-430df60296c6.gif"/>
@@ -36,11 +42,6 @@ Apply filters using sliders and checkboxes
 <img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/191995466-641a53c2-2659-4c11-be82-c44d43700db6.gif"/>
 </div>
 <br/><br/>
-Form validation
-<br/><br/>
-<div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/192012129-b0c43517-85f1-48f3-ae3d-3f4d00741781.gif"/>
-</div>
 <br/><br/>
 Checkout
 <br/><br/>
