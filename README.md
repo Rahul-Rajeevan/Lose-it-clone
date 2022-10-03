@@ -51,7 +51,7 @@ View the calorie details of different days
 Multi-user support
 <br/><br/>
 <div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193626244-16d37987-2556-4c81-96f3-06c0f484df71.gif"/>
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193628231-304c52bc-9a0f-4442-b135-0a0cd44cca8b.gif"/>
 <div/>
 <br/><br/>
 <div width="100%">
