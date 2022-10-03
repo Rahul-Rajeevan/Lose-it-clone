@@ -28,7 +28,7 @@
 Form validation
 <br/><br/>
 <div width="100%">
-<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/192012129-b0c43517-85f1-48f3-ae3d-3f4d00741781.gif"/>
+<img width="70%" margin="auto" src="https://user-images.githubusercontent.com/101565872/193619725-5b8983bb-6f4a-4663-9f3f-82a08cf296e1.gif"/>
 </div>
 Search for food items by name and get their calorie information using API built by us.
 <br/><br/>
