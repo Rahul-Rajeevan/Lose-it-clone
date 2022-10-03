@@ -23,7 +23,7 @@
 </ul>
 
 <br/>
-<h2 align="center" >✨ FUNCTIONALITIES ✨<h2/>
+<h2 align="center" >✨ FUNCTIONALITIES (multi-user)✨<h2/>
 
 Form validation
 <br/><br/>
