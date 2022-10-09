@@ -1,7 +1,5 @@
-export const GET_BOOK_LOADING="GET_BOOK_LOADING"
-export const GET_BOOK_SUCCESS="GET_BOOK_SUCCESS"
-export const GET_BOOK_ERROR="GET_BOOK_ERROR"
-
+export const ADD_TOTAL="ADD_TOTAL"
+export const ADD_DATE="ADD_DATE"
 
 export const LOGIN_LOADING="LOGIN_LOADING"
 export const LOGIN_SUCCESS="LOGIN_SUCCESS"

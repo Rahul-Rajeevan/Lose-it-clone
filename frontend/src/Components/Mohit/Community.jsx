@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import LandingPageNav from "../LandingPageNav/LPN";
 import style from "./community.module.css";
 
 const Community = () => {
   return (
     <div>
-     
+     <LandingPageNav/>
       <div className={style.container}>
         <div className={style.left}>
           <table>
