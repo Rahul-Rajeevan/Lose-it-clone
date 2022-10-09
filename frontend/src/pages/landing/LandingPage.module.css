@@ -67,10 +67,12 @@
 
 .dropdown{
     position: absolute;
-    margin-left: 250px;
+    margin-left: 20%;
+    margin-top:2%;
     background-color: white;
     min-height: 90px;
-    width: 300px;
+    width: 18%;
+    z-index: 3;
     /* border: 1px solid red; */
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     

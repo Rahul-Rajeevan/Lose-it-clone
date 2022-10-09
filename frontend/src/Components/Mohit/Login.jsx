@@ -52,7 +52,7 @@ if(isAuth)
             <div className={style.emailPassword}>Email address</div>
             <input id='email' className={style.email_input} type="text" />
             <div className={style.emailPassword}>Password</div>
-            <input id='password' className={style.email_input} type="text" />
+            <input id='password' className={style.email_input} type="password" />
             <div className={style.login_but}  onClick={handleSubmit} >
                 <div className={style.empty_div}></div>
                 {isLoading?"Loading":"Login"}

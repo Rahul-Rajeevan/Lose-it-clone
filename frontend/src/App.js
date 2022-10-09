@@ -9,6 +9,7 @@ import RequireAuth from "./Components/RequireAuth";
 import ThirdPage from "./Components/SignUpThing/ThirdPage";
 import SecondPage from "./Components/SignUpThing/SecondPage";
 import FourthPage from "./Components/SignUpThing/FourthPage";
+import Community from "./Components/Mohit/Community";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/enterdatas" element={<SecondPage />} />
         <Route path="/caloriedata" element={<ThirdPage />} />
         <Route path="/signup" element={<FourthPage />} />
-
+        <Route path="/community" element={<Community />} />
         <Route
           path="/landing"
           element={
