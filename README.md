@@ -1,4 +1,3 @@
-<img src="https://user-images.githubusercontent.com/101565872/193611096-613b0772-d682-4abc-a49e-11f710b50f1a.png" height="400px" />
 <h2><i><a href="https://elegant-centaur-093589.netlify.app/">LIVE SITE</a></i></h2>
 <h3>Website to make counting calories simpler. It was created with the goal of helping people reach a healthy weight by providing them with the tools they need for success.</h3>
 
