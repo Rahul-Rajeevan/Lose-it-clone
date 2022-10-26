@@ -6,39 +6,61 @@ import { ADD_DATE } from '../../Redux/Action.type'
 const Right = () => {
   const dispatch=useDispatch()
   const [num, setnum] = useState(1)
-  const {date}=useSelector(state=>state.Reducer)
+  const {date,total}=useSelector(state=>state.Reducer)
 var today = new Date();
-var date12 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+let y=today.getMonth(); let b=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+var date12 = b[y]+' '+today.getDate()+','+today.getFullYear();
   const [show, setshow] = useState(date12)
-  function getYesterdayDate() {
+const handleDate=(val)=>{
+  
+  if(val===1)
+  { 
+    setnum(num+1)
     let g=num*24*60*60*1000;
-    // console.log(g,typeof g)
     let t=new Date(new Date().getTime() - g);
-    let h=t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate();
-    setshow(h)
+    let y=t.getMonth(); let b=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+    let h=b[y]+' '+t.getDate()+','+t.getFullYear();
+    dispatch({type:ADD_DATE,payload:h});
   }
+  else if(val===2)
+  {
+    setnum(num-1)
+  let g=num*24*60*60*1000;
+  let t=new Date(new Date().getTime() - g);
+  let y=t.getMonth(); let b=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+  let h=b[y]+' '+t.getDate()+','+t.getFullYear();
+  dispatch({type:ADD_DATE,payload:h});
+}
+}
+
+
+  useEffect(() => {
+ console.log(date)
+  }, [date])
   
  
   // This arrangement can be altered based on how we want the date's format to appear.
  
   return (
-    <Box w="35%">
+    <Box w="35%" bg="white" >
       <Flex gap="1rem" alignItems="center">
-      <Button onClick={()=>{dispatch({type:ADD_DATE,payload:-1});
-      getYesterdayDate();
-      setnum(num+1)
-    }}>{"<"}</Button>
-      <Text>{show}</Text>
-      <Button onClick={()=>{dispatch({type:ADD_DATE,payload:1});
-    getYesterdayDate();
-    setnum(num-1)
-    }}>{">"}</Button>
+      <Button bg="#f0f0f0" border="1px solid grey" onClick={()=>{handleDate(1)
+    }}><i class="fa-sharp fa-solid fa-caret-left fa-lg"></i></Button>
+      <Text fontWeight="bold">{date}</Text>
+      <Button bg="#f0f0f0" border="1px solid grey" onClick={()=>{handleDate(2)
+    }}><i class="fa-solid fa-caret-right fa-lg"></i></Button>
       </Flex>
-      
-          <Progress colorScheme='green' height='32px' value={22} />
+      <br/>
+      <Flex direction="column" border="1px solid #edf0f3" padding="10px">
+      <Flex>
+      <Progress colorScheme='green' height='32px' value={100} w="75%"/>
+      <Progress colorScheme='red' height='32px' value={28} w="25%" />
+        </Flex>
+      <br/>
           <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Daily calorie budget</Text><Text fontSize='xs'>2200</Text></Flex>
-          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Food calories consumed</Text><Text fontSize='xs'>{123}</Text></Flex>
+          <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Food calories consumed</Text><Text fontSize='xs'>{total}</Text></Flex>
           <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Exercise calories burned</Text><Text fontSize='xs'></Text></Flex>
+          <hr/>
           <Flex width="90%" justifyContent="space-between"><Text fontSize='xs'>Net calories so far today</Text><Text fontSize='xs'></Text></Flex>
           <br/>
           <Flex direction='column' boxShadow='lg' width="59%" height="50%" margin="auto" backgroundColor="#f4fcff">
@@ -46,6 +68,8 @@ var date12 = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
          <Text fontSize='md' color="blue">Do more with Lose It ! Premium</Text>
           <Text fontSize='xs'>Plan meals, customize goals and more!</Text>
           </Flex>
+      </Flex>
+          
            </Box>
   )
 }

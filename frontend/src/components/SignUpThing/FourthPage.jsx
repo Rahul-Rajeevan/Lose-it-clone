@@ -14,13 +14,13 @@ const FourthPage = () => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
     console.log(signup);
   };
-  // https://dry-plateau-25724.herokuapp.com/user/signup
+  // http://localhost:8080/user/signup
   const handleClick = () => {
     if (signup.email && signup.password) {
       setState("Loading...");
 
       return axios
-        .post("https://dry-plateau-25724.herokuapp.com/user/signup", signup)
+        .post("http://localhost:8080/user/signup", signup)
         .then(() => {
           alert("Signup Successfull");
         })

@@ -2,18 +2,35 @@ import React, { useCallback, useEffect, useState } from 'react'
 import {Box,Flex, Spacer, Text, Image, Button,Menu,MenuButton,MenuList,MenuItem, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Progress, Input} from '@chakra-ui/react';
 import styles from './LandingPage.module.css'
 import LandingPageNav from '../../Components/LandingPageNav/LPN';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Right from './Right';
 import Component from './Component';
 import Component2 from './Component2';
+import { fetchDay } from '../../Redux/Action';
 
 const LandingPage = () => {
-  const {token}=useSelector((state)=>state.AuthReducer)||localStorage.getItem("token")
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [box, setbox] = useState(1)
-   // code for food search
+  const {bre,isLoading,total,isError,date}=useSelector(state=>state.Reducer)
+const dispatch=useDispatch();
+  // const [bre, setBre] = useState({morning:[],afternoon:[],dinner:[],snack:[]})
+// const [after,setAfter]=useState([])
+// const [dinn, setDinn] = useState([])
+// const [snack, setSnack] = useState([])
+// const [exer, setExer] = useState([])
+
+    
+
+
+  useEffect(() => {
+    // console.log(date)
+   dispatch(fetchDay(date));
+  }, [date])
+
+
+
   return (
     <div className={styles.background} >
       <LandingPageNav/>
@@ -103,11 +120,17 @@ const LandingPage = () => {
   </Flex>
   
     </Flex>
-    <Component name={"breakfast"}/>
-    <Component name={"lunch"}/>
-    <Component name={"dinner"}/>
-    <Component name={"snack"}/>
+    {/* {isLoading&&<h1>Loading...</h1>} */}
+    {isError&&<h1>Something went wrong</h1>}
+    {!isLoading&&
+    <Box>
+    <Component name={"breakfast"} foodList={bre.morning}/>
+    <Component name={"lunch"} foodList={bre.afternoon}/>
+    <Component name={"dinner"} foodList={bre.dinner}/>
+    <Component name={"snack"} foodList={bre.snack}/>
     <Component2/>
+    </Box>
+    }
   </Box>
 <Right/>
 </Flex>

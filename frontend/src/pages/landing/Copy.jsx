@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const LandingPage = () => {
-  const {token}=useSelector((state)=>state.AuthReducer)||localStorage.getItem("token")
+  const token=localStorage.getItem("token")
   const { isOpen, onOpen, onClose } = useDisclosure()
   // code for food search
   const [list, setList] = useState([])
@@ -45,7 +45,7 @@ toarray();
 
 
 const toarray=async()=>{
- await axios.post("https://dry-plateau-25724.herokuapp.com/day/details",{date},{headers:{"Authorization":`Bearer ${token}`}}).then(r=>{
+ await axios.post("http://localhost:8080/day/details",{date},{headers:{"Authorization":`Bearer ${token}`}}).then(r=>{
  console.log(r.data)   
  setMorning(r.data.morning); setafternoon(r.data.afternoon); setSnack(r.data.snack); setdinner(r.data.dinner);
  setTotal(r.data.cal); setexercise(r.data.exercise);
@@ -53,7 +53,7 @@ const toarray=async()=>{
 }
 
 const getItem=(id,val)=>{
-axios.get(`https://dry-plateau-25724.herokuapp.com/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
+axios.get(`http://localhost:8080/food?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
   .then(res=> {
     if(val===1)
     setMorning([...morning,res.data])
@@ -77,13 +77,13 @@ axios.get(`https://dry-plateau-25724.herokuapp.com/food?id=${id}`,{headers:{"con
       q-=i.cal
     }
 let cal=q;
-   await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+   await axios.post("http://localhost:8080/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
       
   })
   
 }
 const getexercise=(id,val)=>{
-  axios.get(`https://dry-plateau-25724.herokuapp.com/exercise?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
+  axios.get(`http://localhost:8080/exercise?id=${id}`,{headers:{"content-type":"application/json","Authorization":`Bearer ${token}`}})
 .then(res=> {
   // console.log(res.data)
   setexercise([...exercise,res.data])
@@ -101,7 +101,7 @@ const getexercise=(id,val)=>{
       q-=i.cal
     }  
   let cal=q;
-     await axios.post("https://dry-plateau-25724.herokuapp.com/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))   
+     await axios.post("http://localhost:8080/day",{morning,afternoon,dinner,snack,date,cal,exercise},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))   
     })
     
   }

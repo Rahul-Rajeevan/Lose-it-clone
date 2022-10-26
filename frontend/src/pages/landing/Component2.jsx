@@ -38,14 +38,14 @@ setitem({})
 }
 
 const getData=async(item)=>{
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InExMjMiLCJpYXQiOjE2NjUyOTA4MTB9.MWwVJByA5ju9Q3EqmMKF3qtAbq2YZh9ZPip_2xRUtQQ"
+  const token=localStorage.getItem("token")||"";
   setfood(item)
   await axios.post("http://localhost:8080/day",{exercise:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
  
  }
 
 useEffect(() => {
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InExMjMiLCJpYXQiOjE2NjUyNTIxMTd9.g_8gAaIsG7I_28T8XUTLl9mw7b3gQFf8jySmqvlGwlU"
+  const token=localStorage.getItem("token")||"";
   if(query.length>0)
   {fetch(`http://localhost:8080/exercise?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
   .then(r=>r.json()).then(res=> setlist(res))}

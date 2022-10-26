@@ -2,8 +2,9 @@
 .nav_div{
     height: 30px;
     width: 100%;
-    background-image: linear-gradient(to right,rgb(14, 71, 150), rgb(55, 55, 211), rgb(14, 71, 150)) ;
-}
+    background: linear-gradient(180deg, hsla(207, 81%, 60%, 1) 0%, hsla(207, 77%, 36%, 1) 51%, hsla(207, 77%, 33%, 1) 100%);
+
+    }
 .menu_div{
     width: 70%;
     display: flex;
@@ -21,7 +22,7 @@
 .link{
     color: white;
     text-decoration: none;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 }
 .logo{
     margin-top: 40px;

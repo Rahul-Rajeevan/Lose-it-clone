@@ -3,7 +3,7 @@ import style from "./Login.module.css"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../Redux/Action'
-//https://dry-plateau-25724.herokuapp.com/
+//http://localhost:8080/
 const Login = () => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -31,7 +31,7 @@ if(isAuth)
 //     if(!email || !password){return}
 //     //make api call
 //     console.log(email,password)
-//     axios.post('https://dry-plateau-25724.herokuapp.com/user/login', {
+//     axios.post('http://localhost:8080/user/login', {
 //         email: email,
 //         password: password
 //       })

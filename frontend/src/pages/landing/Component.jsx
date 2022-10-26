@@ -3,19 +3,28 @@ import { Box, Button, Fade, Flex, Image, Input, Menu, MenuButton, MenuItem, Menu
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchDay } from '../../Redux/Action'
 import { ADD_TOTAL } from '../../Redux/Action.type'
 import styles from './LandingPage.module.css'
-const Component = ({name}) => {
+const Component = ({name,foodList}) => {
 const [list, setlist] = useState([])
 const [cal,setcal]=useState(0)
-const [food, setfood] = useState([])
+const [food, setfood] = useState(foodList)
 const [item, setitem] = useState({})
 const [query, setQuery] = useState("")
-const [qty, setqty] = useState(1)
+const [qty, setqty] = useState(1);
 const {total,date}=useSelector((state)=>state.Reducer)
+// const {token}=useSelector((state)=>state.AuthReducer)
 const dispatch=useDispatch()
 const handleInput = (e) => {
-  setQuery(e.target.value);
+  let id;
+  if(id)
+        {clearInterval(id);}
+        id=setTimeout(function()
+        {
+          setQuery(e.target.value);
+        },1000)
+  
 }
 const addFood=(item)=>{
   let flag=false;
@@ -26,61 +35,58 @@ for(let i=0;i<food.length;++i)
 }
 if(!flag)
 {let newitem={...item,qty}
-setcal(newitem.qty*newitem.cal)
-console.log(cal)
+// setcal(newitem.qty*newitem.cal)
+
 let y=[...food];
 y.push(newitem)
-getData(y)
+getData(y);
 }
-
 setqty(1)
 setlist([])
 setitem({})
 }
 
-const getData=async(item)=>{
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InExMjMiLCJpYXQiOjE2NjUyOTA4MTB9.MWwVJByA5ju9Q3EqmMKF3qtAbq2YZh9ZPip_2xRUtQQ"
+const myFn=async(t)=>{
+  const token=localStorage.getItem("token")||"";
+  await axios.post("http://localhost:8080/day",t,{headers:{"Authorization":`Bearer ${token}`}}).then(()=>
+  dispatch(fetchDay(date))
+  )
+}
+
+const getData=(item)=>{
   setfood(item)
   if(name==="breakfast") 
-  await axios.post("http://localhost:8080/day",{morning:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+ myFn({morning:item,date})
  else if(name==="lunch")
- await axios.post("http://localhost:8080/day",{afternoon:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+ myFn({afternoon:item,date})
  else if(name==="dinner")
- await axios.post("http://localhost:8080/day",{dinner:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+ myFn({dinner:item,date})
  else if(name==="snack")
- await axios.post("http://localhost:8080/day",{snack:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+ myFn({snack:item,date})
  else if(name==="Exercise")
- await axios.post("http://localhost:8080/day",{exercise:item,date},{headers:{"Authorization":`Bearer ${token}`}}).then((r)=>console.log(r))
+ myFn({exercise:item,date})
+ }
 
+ const deleteItem=(val)=>{
+let newfood=food.filter(e=>e._id!==val)
+setfood(newfood)
  }
 
 useEffect(() => {
-  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InExMjMiLCJpYXQiOjE2NjUyNTIxMTd9.g_8gAaIsG7I_28T8XUTLl9mw7b3gQFf8jySmqvlGwlU"
+  const token=localStorage.getItem("token")||"";
   if(query.length>0)
   {fetch(`http://localhost:8080/food?name=${query}`,{method:"GET",headers:{"Authorization":`Bearer ${token}`}})
   .then(r=>r.json()).then(res=> setlist(res))}
   else
   setlist([])
-
- axios.post("http://localhost:8080/day/details",{date},{headers:{"Authorization":`Bearer ${token}`}}).then(r=>{
- if(name==="breakfast") 
- setfood(r.data.morning)
- else if(name==="lunch")
- setfood(r.data.afternoon)
- else if(name==="dinner")
- setfood(r.data.dinner)
- else if(name==="snack")
- setfood(r.data.snack)
- else if(name==="Exercise")
- setfood(r.data.exercise)
- } )
+setfood(foodList)
 }, [query,date])
 
 
   return (
 <Box w='100%'>
     <Flex w='100%' m='auto' h="28px" justifyContent="space-between" bg='#edf0f3'>
-        <Text fontWeight="bold" ml="1%">{name}:{food.length}</Text>
+        <Text fontWeight="bold" ml="1%" style={{textTransform:"capitalize"}}>{name} : {food.length}</Text>
         <Input w="25%" onChange={handleInput} h='90%' mr="1%" bg="white" placeholder='Search and add food'  _placeholder={{ opacity: 1, color: 'gray.500',fontSize:'xs' }}/>
         {list.length>0&&<Box className={styles.dropdown}>
         {!item.name&&list.map(e=>(
@@ -115,15 +121,17 @@ useEffect(() => {
     <Box h="auto" minHeight="100px" bg="white" zIndex="0">
 {food.length===0&&<Text pt="6%">No food logged for {name}</Text>}
 {food.length>0&&food.map(e=>(
-<Flex alignItems="center">
+<Flex alignItems="center" key="e._id">
 <Flex alignItems="center" gap="2rem">
-<Image w="50px" src={e.url} alt={e.name}/>
+<Image w="40px" src={e.url} alt={e.name}/>
 <Text fontWeight="bold">{e.name}</Text>
 </Flex>
 <Spacer/><Spacer/>
 <Flex alignItems="center" gap="1rem" fontWeight="bold"><Text>{e.qty}</Text><Text>{e.unit}</Text></Flex>
 <Spacer/>
 <Text fontWeight="bold" pr="10px">{e.cal*e.qty}</Text>
+<Spacer/>
+<Text fontWeight="bold" pr="10px" onClick={()=>deleteItem(e._id)} color="#43474a" cursor="pointer">X</Text>
 </Flex>
 ))
 
