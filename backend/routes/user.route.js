@@ -7,24 +7,28 @@ const userRouter = Router();
 
 userRouter.post("/signup", async (req, res) => {
   const { password, email, age, weight, name } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
-  bcrypt.hash(password, 8, async function (err, hash) {
-    console.log(hash);
-    if (!hash) {
-      res.send({ message: "Something went wrong" });
-    } else {
-      const Data = userModel({
-        name,
-        email,
-        password: hash,
-        age,
-        weight,
-      });
-      await Data.save();
-      res.send({ message: req.body });
-    }
-  });
+  try {
+    bcrypt.hash(password, 8, async function (err, hash) {
+      // console.log(hash);
+      if (!hash) {
+        res.send({ message: "Something went wrong" });
+      } else {
+        const Data = userModel({
+          name,
+          email,
+          password: hash,
+          age,
+          weight,
+        });
+        await Data.save();
+        res.send({ message: req.body });
+      }
+    });
+  } catch (err) {
+    req.send({ error: err });
+  }
 });
 
 userRouter.post("/login", async (req, res) => {
