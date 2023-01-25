@@ -1,8 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SecondPage = () => {
+  const [weight, setWeight] = useState("");
+  const [goalWeight, setGoalWeight] = useState("");
+  const [height, setHeight] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleWeight = () => {
+    if (!weight) {
+      alert("Please enter your weight");
+      return false;
+    }
+    if (!goalWeight) {
+      alert("Please enter your Goal Weight");
+      return false;
+    }
+    if (!height) {
+      alert("Please enter your height");
+      return false;
+    } else {
+      localStorage.setItem("weight", JSON.stringify(weight));
+      navigate("/caloriedata");
+    }
+  };
+
   return (
     <Container>
       <IMGContainer />
@@ -17,21 +42,48 @@ const SecondPage = () => {
         <Box1>
           <Heading>Current Weight</Heading>
           <InputContainer>
-            <InputBox type="number" placeholder="Enter your weight" />
+            <InputBox
+              type="number"
+              placeholder="Enter your weight"
+              value={weight}
+              onChange={(e) =>
+                typeof e.target.value === "number"
+                  ? alert("Please enter Numeric")
+                  : setWeight(e.target.value)
+              }
+            />
             <InputBox placeholder="kg" value="kg" />
           </InputContainer>
         </Box1>
         <Box1>
           <Heading>Goal Weight</Heading>
           <InputContainer>
-            <InputBox type="number" placeholder="Enter your Goal weight" />
+            <InputBox
+              type="number"
+              placeholder="Enter your Goal weight"
+              value={goalWeight}
+              onChange={(e) =>
+                typeof e.target.value === "number"
+                  ? alert("Please enter Numeric")
+                  : setGoalWeight(e.target.value)
+              }
+            />
             <InputBox placeholder="kg" value="kg" />
           </InputContainer>
         </Box1>
         <Box1>
           <Heading>Enter your height</Heading>
           <InputContainer>
-            <InputBox type="number" placeholder="Enter your Height(cm)" />
+            <InputBox
+              type="number"
+              placeholder="Enter your Height(cm)"
+              value={height}
+              onChange={(e) =>
+                typeof e.target.value === "number"
+                  ? alert("Please enter Numeric")
+                  : setHeight(e.target.value)
+              }
+            />
           </InputContainer>
         </Box1>
         <Box1>
@@ -43,9 +95,9 @@ const SecondPage = () => {
           </div>
         </Box1>
         <Box1>
-          <Link to="/caloriedata">
-            <ButtonBox>Continue</ButtonBox>
-          </Link>
+          {/* <Link to="/caloriedata"> */}
+          <ButtonBox onClick={handleWeight}>Continue</ButtonBox>
+          {/* </Link> */}
         </Box1>
       </InsideContainer>
     </Container>
@@ -129,7 +181,7 @@ const ButtonBox = styled.button`
   align-items: center;
   text-align: center;
   border-radius: 8px;
-  border : 2px solid #173962
+  border: 2px solid #173962;
 `;
 
 export default SecondPage;

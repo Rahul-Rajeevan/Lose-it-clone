@@ -6,19 +6,21 @@ const FourthPage = () => {
   const [signup, setSignup] = useState({
     email: "",
     password: "",
+    name: "",
+    weight: JSON.parse(localStorage.getItem("weight")),
   });
   const [state, setState] = useState("Signup");
   const navigate = useNavigate();
 
   const onChangeInput = (e) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
-    console.log(signup);
+    // console.log(signup);
   };
   // http://localhost:8080/user/signup
   const handleClick = () => {
-    if (signup.email && signup.password) {
+    if (signup.email && signup.password && signup.name) {
       setState("Loading...");
-
+      console.log(signup);
       return axios
         .post("http://localhost:8080/user/signup", signup)
         .then(() => {
@@ -30,14 +32,14 @@ const FourthPage = () => {
         .catch(() => {
           alert("SignUp Failed Try Again!!!");
         });
-      } else {
-        alert("No data is found , please write data")
-
+    } else {
+      alert("No data is found , please write data");
     }
 
     setTimeout(() => {
       setState("Signup");
     }, 2000);
+    console.log(signup);
   };
   return (
     <Container>
@@ -49,11 +51,10 @@ const FourthPage = () => {
         <Box2>
           <InputBox
             placeholder="Your Name"
-            name="username"
+            name="name"
+            type="text"
             required
-            // onChange={(e) => {
-            //   onChangeInput(e);
-            // }}
+            onChange={onChangeInput}
           />
         </Box2>
         <Box2>
