@@ -1,5 +1,5 @@
 const express = require("express");
-const { r } = require("./config/db");
+const { connectDB } = require("./config/db");
 const userRouter = require("./routes/user.route");
 const foodRouter = require("./routes/food.routes");
 const exerciseRouter = require("./routes/exercise.routes");
@@ -25,8 +25,8 @@ app.use("/day", userDayRouter);
 
 app.listen(PORT, async () => {
   try {
-    await r;
-    console.log("Connection db succesfull");
+    await connectDB();
+    // console.log("Connection db succesfull");
   } catch (err) {
     console.log("Connection to db Failed");
     console.log(err);
