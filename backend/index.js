@@ -25,8 +25,8 @@ app.use("/day", userDayRouter);
 
 app.listen(PORT, async () => {
   try {
-    await connectDB();
-    // console.log("Connection db succesfull");
+    await connectDB;
+    console.log("Connection to db succesfull");
   } catch (err) {
     console.log("Connection to db Failed");
     console.log(err);
